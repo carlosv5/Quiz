@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quiz</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+  </head> 
+  <body>
+  <div id="page-wrap">
+  <header class="main" id="h1">
+      <h1>Quiz, el juego de las preguntas</h1>
+    </header>
+    <nav class="main" id="n1" role="navigation">
+        <ul>
+            <li><a href="/" class="navegador">Página Principal</a></li>
+            <li><a href="/quizes/question" class="navegador">Preguntas</a></li>
+           <li><a href="/author" class="navegador">Autores</a></li>
+        </ul>
+        </nav>
+        <section class="main" id="s1">
+          <%- body %>
+        </section>
+
+        <footer class="main" id="f1">
+          <a href="https://github.com/carlosv5/Quiz">Quiz en Git</a>
+        </footer>
+    </div>
+  </body>
+</html>
