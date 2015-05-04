@@ -33,9 +33,16 @@ res.render('quizes/answer' ,
 
 //GET /quizes
 exports.index = function(req,res) {
+  if(req.query.search === undefined){
 	models.Quiz.findAll().then(function(quizes) {
 		res.render('quizes/index.ejs', { quizes: quizes, errors:[]});
-	}).catch(function(error){ next(error);})
+	}).catch(function(error){ next(error);});
+} else {
+      buscar = req.query.search.replace(/\s/g,"%");
+      models.Quiz.findAll({where:["pregunta like ?", "%"+buscar+"%"]}).then(function(quizes){
+      res.render('quizes/index.ejs', { quizes: quizes, errors:[]});
+  }).catch(function(error){ next(error);})
+  } 
 };
 
 //GET /quizes/new
