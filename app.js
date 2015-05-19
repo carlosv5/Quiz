@@ -12,6 +12,9 @@ var routes = require('./routes/index');
 
 var app = express();
 
+var timer1;
+var timer2;
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -35,8 +38,36 @@ app.use(function(req,res,next){
         req.session.redir = req.path;
 
     }
+    else{
+        if(req.session.user) {
+            timer1 = new Date();
+            timer1 = timer1.getSeconds() +timer1.getMinutes()*60 + timer1.getHours()*3600;
+            timer2=0;
+        }
+    }
     //Hacer visible req.session en las vistas
     res.locals.session = req.session;
+    next();
+});
+
+app.use(function(req,res,next) {
+    switch(timer2) {
+        case 0:
+            timer2 = new Date();
+            timer2 = timer2.getSeconds() +timer2.getMinutes()*60 + timer2.getHours()*3600;
+            break;
+        default:
+            timer1= new Date();
+            timer1 = timer1.getSeconds() +timer1.getMinutes()*60 + timer1.getHours()*3600;
+            break;
+    }
+    if(req.session.user && (timer1-timer2) > 120) {
+        req.session.destroy();
+        
+    }
+
+    timer2 = new Date();
+    timer2 = timer2.getSeconds() +timer2.getMinutes()*60 + timer2.getHours()*3600;
 
     next();
 });
