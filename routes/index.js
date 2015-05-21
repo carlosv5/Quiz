@@ -5,6 +5,7 @@ var quizController = require('../controllers/quiz_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 var statisticsController = require('../controllers/statistics_controller');
+var userController = require('../controllers/user_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -13,6 +14,7 @@ router.get('/', function(req, res) {
 
 router.param('quizId',quizController.load);  //autoload :quizId
 router.param('commentId', commentController.load);  // autoload :commentId 
+router.param('userId', userController.load); //autoload :userId
 
 router.get('/quizes', quizController.index);
 router.get('/quizes/:quizId(\\d+)' , quizController.show);
@@ -22,10 +24,19 @@ router.post('/quizes/create',sessionController.loginRequired, quizController.cre
 router.get('/quizes/:quizId(\\d+)/edit',sessionController.loginRequired, quizController.edit);
 router.put('/quizes/:quizId(\\d+)',sessionController.loginRequired, quizController.update);
 router.delete('/quizes/:quizId(\\d+)',sessionController.loginRequired, quizController.destroy);
+
 //Definicion de rutas de sesion
 router.get('/login',sessionController.new); //formulario login
 router.post('/login', sessionController.create); //crear sesion
 router.get('/logout', sessionController.destroy);//destruir sesion
+
+//Definicion de rutas de cuenta
+router.get('/user', userController.new); //formulario sign in
+router.post('/user', userController.create); //registrar usuario
+router.get('/user/:userId(\\d+)/edit', sessionController.loginRequired, userController.edit);
+router.put('/user/:userId(\\d+)',sessionController.loginRequired, userController.update);
+router.delete('/user/:userId(\\d+)', sessionController.loginRequired, userController.destroy);
+
 router.get('/author', function(req,res){
 	res.render('author', {title:'Quiz' , errors:[]});
 }); //Le he puesto aqui tambien errors
