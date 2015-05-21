@@ -30,6 +30,9 @@
             <li><a href="/" class="navegador">Inicio</a></li>
             <li><a href="/quizes" class="navegador">Preguntas</a></li>
             <li><a href="/quizes/statistics" class="navegador">Estadísticas</a></li>
+            <%if(session.user){%>
+              <li>  <span><a href="/user/<%=session.user.id%>/quizes/">Mis preguntas</a></span></li>
+            <%}%>
            <li><a href="/author" class="navegador">Autores</a></li>
         </ul>
         </nav>

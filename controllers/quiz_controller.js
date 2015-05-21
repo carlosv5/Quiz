@@ -33,8 +33,13 @@ res.render('quizes/answer' ,
 
 //GET /quizes
 exports.index = function(req,res) {
+  var options={};
+  if(req.user){  //req.user es creado por autoload de usuario
+                //si la ruta lleva el parametro .quizId
+    options.where = {UserId : req.user.id }
+  }
   if(req.query.search === undefined){
-	models.Quiz.findAll().then(function(quizes) {
+	models.Quiz.findAll(options).then(function(quizes) {
 		res.render('quizes/index.ejs', { quizes: quizes, errors:[]});
 	}).catch(function(error){ next(error);});
 } else {
