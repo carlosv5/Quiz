@@ -49,10 +49,15 @@ Quiz.hasMany(Comment); //Una pregunta puede tener muchos comentarios
 Quiz.belongsTo(User);
 User.hasMany(Quiz);
 
+//Relaciones favoritos: quiz y usuarios
+User.belongsToMany(Quiz, {as:'Favourites', through: 'Favourites'});
+Quiz.belongsToMany(User, {as:'Fan', through: 'Favourites'});
+
 //exportar tablas
 exports.Quiz = Quiz; 
 exports.Comment = Comment;
 exports.User = User;
+
 
 // sequelize.sync() inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {

@@ -1,0 +1,27 @@
+<h1>Lista de favoritos</h1>
+<table>
+
+ <%for(index in favourites){%>
+	<tr>
+		<td><a href="/quizes/<%= favourites[index].id %>"><%= favourites[index].pregunta %></a></td>
+		<%if(session.user){
+		if(session.user.isAdmin || session.user.id ===favourites[index].id.UserId){%>
+			<td><form method="post" action="/user/<%= session.user.id%>/favourites/<%=favourites[index].id%>?_method=delete">
+			<button type="submit">
+		<img class="estrella" src="../../../images/favorito.png">
+			</button>
+			</form></td>
+			<td><a href="/quizes/<%= favourites[index].id %>/edit"><button>Editar</button></a></td>
+			<td>
+			<form method="post" action="/quizes/<%=favourites[index].id %>?_method=delete">
+			<button type="submit" onClick="return confirm('Borrar: <%= favourites[index].pregunta %>');">
+			Borrar
+			</button>
+			</form>
+			</td>
+		<%}
+		}%>
+	</tr>
+	<% } %>
+</table>
+

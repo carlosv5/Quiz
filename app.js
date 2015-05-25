@@ -69,7 +69,6 @@ app.use(function(req,res,next) {
         req.session.destroy();
         
     }
-
     timer2 = new Date();
     timer2 = timer2.getSeconds() +timer2.getMinutes()*60 + timer2.getHours()*3600;
 
